@@ -1,2 +1,1 @@
-from . import detection
-from . import classification
+from .resnet import *

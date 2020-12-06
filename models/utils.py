@@ -1,13 +1,16 @@
+import sys
 import torch
 from torch import nn
+from torch.nn import functional as F
 
 
-class Mish(torch.nn.Module):
+
+class Mish(nn.Module):
     def __init__(self):
         super().__init__()
 
     def forward(self, x):
-        x = x * (torch.tanh(torch.nn.functional.softplus(x)))
+        x = x * (torch.tanh(F.softplus(x)))
         return x
 
 
@@ -62,8 +65,7 @@ class Conv_Bn_Activation(nn.Module):
         elif activation == "linear":
             pass
         else:
-            print("activate error !!! {} {} {}".format(sys._getframe().f_code.co_filename,
-                                                       sys._getframe().f_code.co_name, sys._getframe().f_lineno))
+            print("activation error !!!")
 
     def forward(self, x):
         for l in self.conv:

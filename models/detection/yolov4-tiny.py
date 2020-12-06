@@ -15,8 +15,8 @@ class PartialBlock(nn.Module):
         # It's concatenation again
         self.max1 = nn.MaxPool2d(2, 2)
 
-    def forward(self, input, feat_out=False):
-        x1 = self.conv1(input)
+    def forward(self, inp, feat_out=False):
+        x1 = self.conv1(inp)
         g0, g1 = torch.split(x1, [x1.shape[1]//2, x1.shape[1]//2], dim=1)
         x2 = self.conv2(g1)
         x3 = self.conv3(x2)
@@ -50,8 +50,8 @@ class Yolov4TinyHead(nn.Module):
                                 anchors=[10, 14,  23, 27,  37, 58,  81, 82,  135, 169,  344, 319],
                                 num_anchors=6, stride=16)
 
-    def forward(self, input, feat_in):
-        x1 = self.conv1(input)
+    def forward(self, inp, feat_in):
+        x1 = self.conv1(inp)
         x2 = self.conv2(x1)
         x3 = self.conv3(x2)
         x4 = self.conv4(x3)
@@ -83,8 +83,8 @@ class Yolov4Tiny(nn.Module):
         self.partial3 = PartialBlock(256)
         self.head = Yolov4TinyHead(n_classes, inference)
 
-    def forward(self, input):
-        d1 = self.conv1(input)
+    def forward(self, inp):
+        d1 = self.conv1(inp)
         d2 = self.conv2(d1)
         d3 = self.partial1(d2)
         d4 = self.partial2(d3)
